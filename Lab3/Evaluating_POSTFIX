@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
+int top=-1;
+int stk[100];
+void push(int val);
+int pop();
+int eval(char input[],int length);
+int main()
+{
+    char infix[100];
+    int len;
+    printf("Enter the infix expression : ");
+    scanf("%s",infix);
+    len=(int)strlen(infix);
+    printf("Result of the expression is %d\n",eval(infix,len));
+    return 0;
+}
+int eval(char input[],int length){
+    int x=0,op1,op2;
+    int result=0;
+    printf("Traversing the infix expression :");
+    for (int i=0;i<length;i++){
+        printf("%c\n",input[i]);
+    }
+    for(x=0;x<length;x++){
+        if(isdigit(input[x])==true){
+            push(input[x]);
+        }
+        else if(input[x]=='^'){
+            op1=(int)pop();
+            op2=(int)pop();
+            result+=(op1^op2);
+        }
+        else if(input[x]=='*' || input[x]=='/'){
+            op1=(int)pop();
+            op2=(int)pop();
+            if(input[x]=='*'){
+                result+=(op1*op2);
+            }
+            else if(input[x]=='/'){
+                result+=(op1/op2);
+            }
+        }
+        else if(input[x]=='+' || input[x]=='-'){
+            op1=(int)pop();
+            op2=(int)pop();
+            if(input[x]=='+'){
+                result=result+(op1+op2);
+            }
+            else if(input[x]=='-'){
+                result+=(op1-op2);
+            }
+        }
+    }
+    return result;
+}
+void push(int val){
+    stk[++top]=val;
+    printf("top = %d\n",stk[top]);
+}
+int pop(){
+    printf("top = %d\n",stk[top-1]);
+    return stk[top--];
+}

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
+#include <math.h>
 #include <ctype.h>
 int top=-1;
 int stk[100];
@@ -9,12 +9,12 @@ int pop();
 int eval(char input[],int length);
 int main()
 {
-    char infix[100];
+    char postfix[100];
     int len;
-    printf("Enter the infix expression : ");
-    scanf("%s",infix);
-    len=(int)strlen(infix);
-    printf("Result of the expression is %d\n",eval(infix,len));
+    printf("Enter the postfix expression : ");
+    scanf("%s",postfix);
+    len=(int)strlen(postfix);
+    printf("Result of the expression is %d\n",eval(postfix,len));
     return 0;
 }
 int eval(char input[],int length){
@@ -25,13 +25,13 @@ int eval(char input[],int length){
         printf("%c\n",input[i]);
     }
     for(x=0;x<length;x++){
-        if(isdigit(input[x])==true){
-            push(input[x]);
+        if(isdigit(input[x])){
+            push(input[x] - '0');
         }
         else if(input[x]=='^'){
             op1=(int)pop();
             op2=(int)pop();
-            result+=(op1^op2);
+            result+=pow(op1,op2);
         }
         else if(input[x]=='*' || input[x]=='/'){
             op1=(int)pop();
@@ -58,9 +58,7 @@ int eval(char input[],int length){
 }
 void push(int val){
     stk[++top]=val;
-    printf("top = %d\n",stk[top]);
 }
 int pop(){
-    printf("top = %d\n",stk[top-1]);
     return stk[top--];
 }

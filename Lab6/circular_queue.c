@@ -26,7 +26,7 @@ int delete(){
     int element;
     if(isEmpty()){
         printf("Queue is empty\n");
-        return -1;
+        return 0;
     }
     else{
         element = Q[front];

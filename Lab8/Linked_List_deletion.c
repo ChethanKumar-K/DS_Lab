@@ -36,7 +36,7 @@ void pop(){
     else{
         temp=head;
         head=head->next;
-        printf("Element deleted from list : %d",temp->data);
+        printf("Element deleted from list : %d\n",temp->data);
         free(temp);
     }
 }
@@ -52,7 +52,7 @@ void delete(){
             temp=temp->next;
         }
         prev->next=NULL;
-        printf("Element deleted from list : %d",temp->data);
+        printf("Element deleted from list : %d\n",temp->data);
         free(temp);
     }
 }
@@ -66,7 +66,10 @@ void delpos(int pos){
         for(int i=1;i<pos-1;i++){
             temp=temp->next;
         }
-        if(temp->next->next==NULL){
+        if(temp==NULL){
+            printf("Entered position is invalid\n");
+        }
+        else if(temp->next->next==NULL){
             prev=temp;
             temp=temp->next;
             printf("Element deleted from the list is %d\n",temp->data);
